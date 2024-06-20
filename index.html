@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Year Calendar</title>
+</head>
+<body>
+    <select id="months" onchange="calendar()">
+        <option value="">AllMonths</option>
+        <option value="1">January</option>
+        <option value="2">February</option>
+        <option value="3+">March</option>
+        <option value="4">April</option>
+        <option value="5">May</option>
+        <option value="6">June</option>
+        <option value="7">July</option>
+        <option value="8">August</option>
+        <option value="9">September</option>
+        <option value="10">October</option>
+        <option value="11">November</option>
+        <option value="12">December</option>
+      </select>
+    <input type="number" id="years" value="2000" onchange="calendar()" >
+    <div id="web" style="display: flex; flex-wrap: wrap; gap: 20px; margin-top: 20px;"></div>
+   <script>
+    function calendar()
+    {
+        let m=document.getElementById("months").value;
+        let yr=document.getElementById("years").value;
+        let allCalendar="";
+        if(m==''){
+            start=1;
+            end=12
+        }
+        else{
+            start=m;
+            end=m;
+        }
+  mon=["","January","February","March","April","May","June","July","August","September","October","November","December"];
+        for(let m=start;m<=end;m++)
+        {
+            let d=new Date();
+            d.setMonth(m);
+            d.setFullYear(yr);
+            d.setDate(0);
+            var days=d.getDate();
+
+            d.setDate(1);
+            d.setFullYear(yr);
+            var start=d.getDay();
+
+
+            let opt='<table border="1" cellpadding="2" cellspacing="0" >';
+            opt+='<thead><caption>'+mon[m]+" " + yr+'</caption><tr><th>Sun</th><th>Mon</th><th>Tue</th><th>Wed</th><th>Thu</th><th>Fri</th><th>Sat</th></tr></thead>';
+            opt+='<tbody><tr>';
+                for(let i=1;i<=days+start;i++)
+                {
+                    if(i>start) opt+='<td>'+(i-start)+'</td>';
+                    else opt+='<td></td>';
+                    if(i%7==0) opt+='</tr><tr>';
+                }
+                opt+='</tr></tbody></table>';
+                allCalendar+=opt;
+        }
+        document.getElementById("web").innerHTML=allCalendar;
+    }
+
+   </script>
+</body>
+</html>
